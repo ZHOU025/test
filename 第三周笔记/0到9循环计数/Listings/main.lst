@@ -1,0 +1,85 @@
+C51 COMPILER V9.54   MAIN                                                                  03/04/2026 13:59:51 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keli5 51\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\main.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          void Delay(unsigned char xms)           //@11.0592MHz
+   3          {   
+   4   1              while(xms--)
+   5   1              {unsigned char i, j;
+   6   2      
+   7   2              
+   8   2              i = 11;
+   9   2              j = 190;
+  10   2              do
+  11   2              {
+  12   3                      while (--j);
+  13   3              } while (--i);
+  14   2              }
+  15   1      }
+  16          
+  17          unsigned char Nixietable[]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};
+  18          void Nixie(unsigned char location,number)
+  19          {
+  20   1              switch(location)
+  21   1              {       
+  22   2                      case 1:P2_4=0,P2_3=0,P2_2=0;break;
+  23   2                      case 2:P2_4=0,P2_3=0,P2_2=1;break;
+  24   2                      case 3:P2_4=0,P2_3=1,P2_2=0;break;
+  25   2                      case 4:P2_4=0,P2_3=1,P2_2=1;break;
+  26   2                      case 5:P2_4=1,P2_3=0,P2_2=0;break;
+  27   2                      case 6:P2_4=1,P2_3=0,P2_2=1;break;
+  28   2                      case 7:P2_4=1,P2_3=1,P2_2=0;break;
+  29   2                      case 8:P2_4=1,P2_3=1,P2_2=1;break;
+  30   2              }
+  31   1              P0=Nixietable[number];
+  32   1              Delay(1000);
+  33   1              P0=0x00;//同时显示多个数字会有残影，位数和段数同时出现。利用延迟规避。
+  34   1      }
+  35          void main()
+  36          {
+  37   1              while(1){
+  38   2                      Nixie(8,0);
+  39   2              
+  40   2                      Nixie(8,1);
+  41   2                      
+  42   2                      Nixie(8,2);
+  43   2                      
+  44   2                      Nixie(8,3);
+  45   2                      
+  46   2                      Nixie(8,4);
+  47   2                      
+  48   2                      Nixie(8,5);
+  49   2                      
+  50   2                      Nixie(8,6);
+  51   2              
+  52   2                      Nixie(8,7);
+  53   2                      
+  54   2                      Nixie(8,8);
+C51 COMPILER V9.54   MAIN                                                                  03/04/2026 13:59:51 PAGE 2   
+
+  55   2                      
+  56   2                      Nixie(8,9);
+  57   2                      
+  58   2              }       
+  59   1      }       
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    189    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

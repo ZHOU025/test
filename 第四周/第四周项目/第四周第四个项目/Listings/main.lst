@@ -1,0 +1,133 @@
+C51 COMPILER V9.54   MAIN                                                                  03/04/2026 15:38:37 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keli5 51\Keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\main.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Timer0.h"
+   3          #include "NIXIE.H"
+   4          #include "Delay.h"
+*** WARNING C318 IN LINE 4 OF main.c: can't open file 'Delay.h'
+   5          #include "Key.h"
+   6          
+   7          
+   8          unsigned char KeyNum,RunFlag,Grade;
+   9          unsigned char Min,Second,MiniSecond;
+  10          void main()
+  11          {       
+  12   1              
+  13   1              Timer0Init();
+  14   1              while(1)
+  15   1              {
+  16   2              KeyNum=Key();
+  17   2              if(KeyNum==1)
+  18   2              {
+  19   3              RunFlag=!RunFlag;
+  20   3              
+  21   3              }
+  22   2              if(KeyNum==2)
+  23   2              {
+  24   3              Min=0;
+  25   3              Second=0;
+  26   3              MiniSecond=0;
+  27   3              }       
+  28   2              if(KeyNum==3)
+  29   2              {
+  30   3              if((Second*100+MiniSecond)>=950&&(Second*100+MiniSecond)<=1050)
+  31   3              {
+  32   4              P2_7=0;
+  33   4              P2_6=1;
+  34   4              Grade=0x41;     
+  35   4              }else if((Second*100+MiniSecond)>=850&&(Second*100+MiniSecond)<950)
+  36   3              {
+  37   4              P2_7=0; 
+  38   4              P2_6=0;
+  39   4              Grade=0x42;     
+  40   4              }else if((Second*100+MiniSecond)>=1050&&(Second*100+MiniSecond)<1150)
+  41   3              {
+  42   4              P2_7=0; 
+  43   4              P2_6=0;
+  44   4              Grade=0x42;             
+  45   4              }
+  46   3              }       
+  47   2              
+  48   2              Nixie_SetBuf(8,Min/10);
+  49   2              Nixie_SetBuf(7,Min%10);
+  50   2              Nixie_SetBuf(6,11);
+  51   2              Nixie_SetBuf(5,Second/10);
+  52   2              Nixie_SetBuf(4,Second%10);
+  53   2              Nixie_SetBuf(3,11);
+C51 COMPILER V9.54   MAIN                                                                  03/04/2026 15:38:37 PAGE 2   
+
+  54   2              Nixie_SetBuf(2,MiniSecond/10);
+  55   2              Nixie_SetBuf(1,MiniSecond%10);
+  56   2              
+  57   2              }
+  58   1      }
+  59                  
+  60                  void Sec_Loop(void)
+  61          {
+  62   1              if(RunFlag)
+  63   1              {MiniSecond++;
+  64   2              if(MiniSecond>=100)
+  65   2              {
+  66   3              MiniSecond=0;
+  67   3              Second++;
+  68   3              }       
+  69   2              if(Second>=60)
+  70   2              {
+  71   3              Second=0;
+  72   3              Min++;
+  73   3              }       
+  74   2              if(Min>=60)
+  75   2              {Min=0;}        
+  76   2              }
+  77   1      }       
+  78          
+  79          void Timer0_Routine() interrupt 1   
+  80          {               
+  81   1                      static unsigned int T0count,T0count1,T0count2;
+  82   1                      TL0 = 0x66;             //设置定时初值
+  83   1                      TH0 = 0xFC;             //设置定时初值
+  84   1                      T0count++;
+  85   1                      if(T0count>=20)
+  86   1                      {
+  87   2                      T0count=0;
+  88   2                      Key_Loop();
+  89   2                      }
+  90   1                      T0count1++;
+  91   1                      if(T0count1>=2)
+  92   1                      {
+  93   2                      T0count1=0;
+  94   2                      Nixie_Loop();
+  95   2                      }
+  96   1                      T0count2++;
+  97   1                      if(T0count2>=10)
+  98   1                      {
+  99   2                      T0count2=0;
+ 100   2                      Sec_Loop();
+ 101   2                      }
+ 102   1                      
+ 103   1      }
+ 104          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    413    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.54   MAIN                                                                  03/04/2026 15:38:37 PAGE 3   
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
