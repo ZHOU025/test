@@ -1,5 +1,0 @@
-".\Objects\UART.obj",
-".\Objects\main.obj",
-".\Objects\Delay.obj" 
-TO ".\Objects\PROject" 
-PRINT(".\Listings\PROject.m51") RAMSIZE(256) 
