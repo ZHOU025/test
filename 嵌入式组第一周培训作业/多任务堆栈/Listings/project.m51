@@ -1,0 +1,206 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/30/2026  21:35:11  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KELI5 51\C51\BIN\BL51.EXE .\Objects\main.obj TO .\Objects\project PRINT (.\Listings\project.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  D:\KELI5 51\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\project (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0003H     UNIT         ?DT?_TASK_LOAD?MAIN
+                    000BH     0015H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?TASK0?MAIN
+            BIT     0020H.1   0000H.1   UNIT         ?BI?TASK1?MAIN
+                    0020H.2   0000H.6                *** GAP ***
+            DATA    0021H     0049H     UNIT         ?DT?MAIN
+            IDATA   006AH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     003EH     UNIT         ?PR?_TASK_LOAD?MAIN
+            CODE    0041H     0027H     UNIT         ?PR?MAIN?MAIN
+            CODE    0068H     0021H     UNIT         ?PR?TASK_SWITCH?MAIN
+            CODE    0089H     0021H     UNIT         ?PR?DELAY1000MS?MAIN
+            CODE    00AAH     0021H     UNIT         ?PR?DELAY500MS?MAIN
+            CODE    00CBH     0012H     UNIT         ?PR?TASK0?MAIN
+            CODE    00DDH     0012H     UNIT         ?PR?TASK1?MAIN
+            CODE    00EFH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\project (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?TASK0?MAIN
+  +--> ?PR?_TASK_LOAD?MAIN
+  +--> ?PR?TASK1?MAIN
+
+?PR?TASK0?MAIN
+  +--> ?PR?DELAY500MS?MAIN
+  +--> ?PR?TASK_SWITCH?MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/30/2026  21:35:11  PAGE 2
+
+
+
+?PR?TASK1?MAIN
+  +--> ?PR?DELAY1000MS?MAIN
+  +--> ?PR?TASK_SWITCH?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  B:00A0H.5       PUBLIC        LED0
+  B:00A0H.6       PUBLIC        LED1
+  C:0089H         PUBLIC        Delay1000ms
+  D:0027H         SYMBOL        Task_SP
+  D:0081H         PUBLIC        SP
+  C:0041H         PUBLIC        main
+  D:0029H         PUBLIC        Task_id
+  C:00CBH         PUBLIC        Task0
+  C:00DDH         PUBLIC        Task1
+  C:00AAH         PUBLIC        Delay500ms
+  C:0068H         PUBLIC        Task_Switch
+  D:002AH         SYMBOL        Task_Stack
+  C:0003H         PUBLIC        _Task_Load
+  -------         PROC          MAIN
+  C:0041H         LINE#         21
+  C:0041H         LINE#         22
+  C:0041H         LINE#         24
+  C:0050H         LINE#         25
+  C:005FH         LINE#         26
+  C:0062H         LINE#         27
+  C:0065H         LINE#         29
+  C:0067H         LINE#         30
+  -------         ENDPROC       MAIN
+  -------         PROC          TASK0
+  -------         DO            
+  B:0020H.0       SYMBOL        run
+  -------         ENDDO         
+  C:00CBH         LINE#         33
+  C:00CBH         LINE#         34
+  C:00CBH         LINE#         35
+  C:00CDH         LINE#         36
+  C:00D0H         LINE#         37
+  C:00D0H         LINE#         38
+  C:00D2H         LINE#         39
+  C:00D5H         LINE#         40
+  C:00D7H         LINE#         41
+  C:00DAH         LINE#         42
+  C:00DCH         LINE#         43
+  -------         ENDPROC       TASK0
+  -------         PROC          TASK1
+  -------         DO            
+  B:0020H.1       SYMBOL        run
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/30/2026  21:35:11  PAGE 3
+
+
+  -------         ENDDO         
+  C:00DDH         LINE#         45
+  C:00DDH         LINE#         46
+  C:00DDH         LINE#         47
+  C:00DFH         LINE#         48
+  C:00E2H         LINE#         49
+  C:00E2H         LINE#         50
+  C:00E4H         LINE#         51
+  C:00E7H         LINE#         52
+  C:00E9H         LINE#         53
+  C:00ECH         LINE#         54
+  C:00EEH         LINE#         55
+  -------         ENDPROC       TASK1
+  -------         PROC          _TASK_LOAD
+  D:0008H         SYMBOL        fn
+  D:000AH         SYMBOL        tid
+  C:0003H         LINE#         57
+  C:0009H         LINE#         58
+  C:0009H         LINE#         59
+  C:001BH         LINE#         60
+  C:002CH         LINE#         61
+  C:0040H         LINE#         62
+  -------         ENDPROC       _TASK_LOAD
+  -------         PROC          TASK_SWITCH
+  C:0068H         LINE#         64
+  C:0068H         LINE#         65
+  C:0068H         LINE#         66
+  C:0070H         LINE#         67
+  C:0074H         LINE#         68
+  C:0079H         LINE#         69
+  C:007CH         LINE#         70
+  C:0086H         LINE#         71
+  C:0087H         LINE#         72
+  C:0088H         LINE#         73
+  -------         ENDPROC       TASK_SWITCH
+  -------         PROC          DELAY1000MS
+  -------         DO            
+  D:0021H         SYMBOL        i
+  D:0022H         SYMBOL        j
+  D:0023H         SYMBOL        k
+  -------         ENDDO         
+  C:0089H         LINE#         76
+  C:0089H         LINE#         77
+  C:0089H         LINE#         80
+  C:008AH         LINE#         81
+  C:008BH         LINE#         82
+  C:008EH         LINE#         83
+  C:0091H         LINE#         84
+  C:0094H         LINE#         86
+  C:0094H         LINE#         88
+  C:0094H         LINE#         89
+  C:009BH         LINE#         90
+  C:00A2H         LINE#         91
+  C:00A9H         LINE#         92
+  -------         ENDPROC       DELAY1000MS
+  -------         PROC          DELAY500MS
+  -------         DO            
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/30/2026  21:35:11  PAGE 4
+
+
+  D:0024H         SYMBOL        i
+  D:0025H         SYMBOL        j
+  D:0026H         SYMBOL        k
+  -------         ENDDO         
+  C:00AAH         LINE#         93
+  C:00AAH         LINE#         94
+  C:00AAH         LINE#         97
+  C:00ABH         LINE#         98
+  C:00ACH         LINE#         99
+  C:00AFH         LINE#         100
+  C:00B2H         LINE#         101
+  C:00B5H         LINE#         103
+  C:00B5H         LINE#         105
+  C:00B5H         LINE#         106
+  C:00BCH         LINE#         107
+  C:00C3H         LINE#         108
+  C:00CAH         LINE#         109
+  -------         ENDPROC       DELAY500MS
+  -------         ENDMOD        MAIN
+
+Program Size: data=85.2 xdata=0 code=251
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

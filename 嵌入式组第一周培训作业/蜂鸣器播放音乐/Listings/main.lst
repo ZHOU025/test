@@ -1,0 +1,240 @@
+C51 COMPILER V9.54   MAIN                                                                  03/29/2026 20:40:20 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\Keli5 51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\mai
+                    -n.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "Timer0.h"
+   4          
+   5          sbit Buzzer=P2^5;
+   6          
+   7          #define SPEED 100 //频率码
+   8          #define P   0
+   9          #define L1  1
+  10          #define L1_ 2
+  11          #define L2  3
+  12          #define L2_ 4
+  13          #define L3  5
+  14          #define L4  6
+  15          #define L4_ 7
+  16          #define L5  8
+  17          #define L5_ 9
+  18          #define L6  10
+  19          #define L6_ 11
+  20          #define L7  12
+  21          #define M1  13
+  22          #define M1_ 14
+  23          #define M2  15
+  24          #define M2_ 16
+  25          #define M3  17
+  26          #define M4  18
+  27          #define M4_ 19
+  28          #define M5  20
+  29          #define M5_ 21
+  30          #define M6  22
+  31          #define M6_ 23
+  32          #define M7  24
+  33          #define H1  25
+  34          #define H1_ 26
+  35          #define H2  27
+  36          #define H2_ 28
+  37          #define H3  29
+  38          #define H4  30
+  39          #define H4_ 31
+  40          #define H5  32
+  41          #define H5_ 33
+  42          #define H6  34
+  43          #define H6_ 35
+  44          #define H7  36
+  45            //频率数组
+  46            unsigned int FreqTable[]={0,
+  47              63428,63731,63835,63928,64021,64103,64185,64260,64331,64400
+  48            ,64463,64528,64580,64633,64684,64732,64777,64820,64860,64898,64934,64968,65000,65030,
+  49            65058,65085,65110,65134,65157,65178,65198,65217,65235,65252 ,65268,65283};
+  50            
+  51            //为了防止不够存，存在FLUSH里
+  52            //歌曲《天空之城》乐谱
+  53            unsigned char code Music[]={
+  54            P,4,
+C51 COMPILER V9.54   MAIN                                                                  03/29/2026 20:40:20 PAGE 2   
+
+  55            P,4,
+  56            P,4,
+  57            M6,2,
+  58            M7,2,
+  59            H1,4+2,
+  60            M7,2,
+  61            H1,4,
+  62            H3,4,
+  63            M7,12,
+  64            M3,2,
+  65            M3,2,
+  66            M6,4+2,
+  67            M5,2,
+  68            M6,4,
+  69            H1,4,
+  70            M5,12,
+  71            M3,4,
+  72            M4,4+2,
+  73            M3,2,
+  74            M4,4,
+  75            H1,4,
+  76            M3,8,
+  77            P,2,
+  78            H1,2,
+  79            H1,2,
+  80            H1,2,
+  81            M7,4+2,
+  82            M4_,2,
+  83            M4_,4,
+  84            M7,4,
+  85            M7,8,
+  86            P,4,
+  87            M6,2,
+  88            M7,2,
+  89            H1,4+2,
+  90            M7,2,
+  91            H1,4,
+  92            H3,4,
+  93            M7,12,
+  94            M3,2,
+  95            M3,2,
+  96            M6,4+2,
+  97            M5,2,
+  98            M6,4,
+  99            H1,4,
+ 100            M5,12,
+ 101            M2,2,
+ 102            M3,2,
+ 103            M4,4,
+ 104            H1,2,
+ 105            M7,2+2,
+ 106            H1,2+4,
+ 107            
+ 108            H2,2,
+ 109            H2,2,
+ 110            H3,2,
+ 111            H1,2+8,
+ 112            
+ 113            H1,2,
+ 114            M7,2,
+ 115            M6,2,
+ 116            M6,2,
+C51 COMPILER V9.54   MAIN                                                                  03/29/2026 20:40:20 PAGE 3   
+
+ 117            M7,4,
+ 118            M5_,4,
+ 119            M6,12,
+ 120            H1,2,
+ 121            H2,2,
+ 122            H3,4+2,
+ 123            H2,2,
+ 124            H3,4,
+ 125            H5,4,
+ 126            H2,12,
+ 127            M5,2,
+ 128            M5,2,
+ 129            H1,4+2,
+ 130            M7,2,
+ 131            H1,4,
+ 132            H3,4,
+ 133            H3,16,
+ 134            M6,2,
+ 135            M7,2,
+ 136            H1,4,
+ 137            M7,4,
+ 138            H2,2,
+ 139            H2,2,
+ 140            H1,4+2,
+ 141            M5,2+8,
+ 142          
+ 143            H4,4,
+ 144            H3,4,
+ 145            H2,4,
+ 146            H1,4,
+ 147            H3,12,
+ 148            H3,4,
+ 149            H6,8,
+ 150            H5,4,
+ 151            H5,4,
+ 152            H3,2,
+ 153            H2,2,
+ 154            H1,8,
+ 155            P,2,
+ 156            H1,2,
+ 157            H2,4,
+ 158            H1,2,
+ 159            H2,2,
+ 160            H2,4,
+ 161            H5,4,
+ 162            H3,12,
+ 163            H3,4,
+ 164            H6,8,
+ 165            H5,8,
+ 166            H3,2,
+ 167            H2,2,
+ 168            H1,8,
+ 169            P,2,
+ 170            H1,2,
+ 171            H2,4,
+ 172            H1,2,
+ 173            H2,2+4,
+ 174            
+ 175            M7,4,
+ 176            M6,12,
+ 177            M6,2,
+ 178            M7,2,
+C51 COMPILER V9.54   MAIN                                                                  03/29/2026 20:40:20 PAGE 4   
+
+ 179            
+ 180            0xff//终止  
+ 181            };
+ 182            unsigned char FreqSelect,MusicSelect;
+ 183          void main()
+ 184          {
+ 185   1        Timer0Init();
+ 186   1        while(1)
+ 187   1        {
+ 188   2        if(Music[MusicSelect]!=0xff)  
+ 189   2        {FreqSelect=Music[MusicSelect];//每个音的音调
+ 190   3        MusicSelect++;  
+ 191   3        Delay(SPEED/4*Music[MusicSelect]);//每个音的时长
+ 192   3        MusicSelect++;
+ 193   3        //使每个音停顿    
+ 194   3        TR0=0; 
+ 195   3        Delay(5);
+ 196   3        TR0=1;
+ 197   3        }
+ 198   2        else{TR0=0;}
+ 199   2      }
+ 200   1        } 
+ 201                   
+ 202           void Timer0_Routine() interrupt 1   
+ 203          {   
+ 204   1          if(FreqTable[FreqSelect])
+ 205   1          {
+ 206   2          TL0 = FreqTable[FreqSelect]%256;    //设置定时初值
+ 207   2          TH0 = FreqTable[FreqSelect]/256;    //设置定时初值
+ 208   2          Buzzer=!Buzzer;//调制出频率
+ 209   2          }
+ 210   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     97    ----
+   CONSTANT SIZE    =    243    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     76    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
